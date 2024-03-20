@@ -58,4 +58,11 @@
   cursor: pointer;
 }
 
+.sun-container {
+  position: absolute;
+  width: 250vh;
+  height: 250vh;
+  transition-duration: 1s;
+}
+
 

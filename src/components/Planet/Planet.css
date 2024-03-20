@@ -1,7 +1,6 @@
 .planet-img-box {
-  position: absolute;
+  position: relative;
   transition-duration: 0.5s;
-  margin: 30px;
 }
 
 .inactive:hover {
@@ -11,7 +10,8 @@
 
 .inactive {
  transition-duration: 2s;
- 
+ justify-content: center;
+ align-items: center
 }
 .active {
   transition-duration: 2s;
@@ -19,4 +19,11 @@
   height: 70vw;
   margin-top: 200vh;
   left: 13.5vw;
+}
+
+.single-planet {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+ 
 }

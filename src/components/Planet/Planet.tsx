@@ -27,13 +27,13 @@ interface PlanetProps {
 }
 
 const planetProperties = {
-  mercury: { src: MercuryImg, scale: 0.4, left: 10, top: 15 },
-  venus: { src: VenusImg, scale: 0.8, left: 16, top: 25 },
-  earth: { src: EarthImg, scale: 1, left: 24, top: 35 },
-  mars: { src: MarsImg, scale: 0.8, left: 33, top: 45 },
-  jupiter: { src: JupiterImg, scale: 2.5, left: 42, top: 55 },
-  saturn: { src: SaturnImg, scale: 2, left: 58, top: 65 },
-  uranus: { src: UranusImg, scale: 1.5, left: 72, top: 75 },
+  mercury: { src: MercuryImg, scale: 0.4, left: 15, top: 15 },
+  venus: { src: VenusImg, scale: 0.8, left: 20, top: 25 },
+  earth: { src: EarthImg, scale: 1, left: 28, top: 35 },
+  mars: { src: MarsImg, scale: 0.8, left: 37, top: 45 },
+  jupiter: { src: JupiterImg, scale: 2.5, left: 46, top: 55 },
+  saturn: { src: SaturnImg, scale: 2, left: 62, top: 65 },
+  uranus: { src: UranusImg, scale: 1.5, left: 74, top: 75 },
   neptune: { src: NeptuneImg, scale: 1.5, left: 85, top: 85 },
 };
 
@@ -70,10 +70,10 @@ const Planet: React.FC<PlanetProps> = ({
 
   const getDefaultStyle = (): React.CSSProperties => {
     return {
-      height: `${100 * planetScale}px`,
+      height: "250px",
       width: `${100 * planetScale}px`,
       left: `${planetLeft}vw`,
-      top: "auto",
+      top: "37%",
     };
   };
 
@@ -84,22 +84,23 @@ const Planet: React.FC<PlanetProps> = ({
     : getDefaultStyle();
 
   return (
-    <div
-      ref={planetRef}
-      className={`${planet}-img-box planet-img-box ${activeClass}`}
-      onClick={() => {
-        if (planetRef.current) {
-          onClick(planetRef.current);
-        }
-      }}
-      style={planetStyle}
-    >
-      <img
-        className={`${planet}-img planet-img`}
-        src={planetSrc}
-        alt={`${planet}`}
-        style={{ height: "100%", width: "100%" }}
-      />
+    <div className={`single-planet ${activeClass}`} style={planetStyle}>
+      <div
+        ref={planetRef}
+        className={`${planet}-img-box planet-img-box`}
+        onClick={() => {
+          if (planetRef.current) {
+            onClick(planetRef.current);
+          }
+        }}
+      >
+        <img
+          className={`${planet}-img planet-img`}
+          src={planetSrc}
+          alt={`${planet}`}
+          style={{ height: "100%", width: "100%" }}
+        />
+      </div>
     </div>
   );
 };

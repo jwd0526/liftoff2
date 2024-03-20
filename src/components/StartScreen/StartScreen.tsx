@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Planet from "../Planet";
 import { planetType } from "../Planet/Planet";
 import RightArrow from "../../images/rightArrow.svg";
+import Sun from "../Sun";
 
 const PLANETS = [
   "mercury",
@@ -18,7 +19,7 @@ const PLANETS = [
 const generateStars = (container: HTMLElement, numStars: number) => {
   const containerRect = container.getBoundingClientRect();
 
-  for (let i = 0; i < numStars; i++) {
+  const stars = Array.from({ length: numStars }).map(() => {
     const star = document.createElement("div");
     star.classList.add("star");
     const starSize = Math.random() * (3 - 1) + 1; // Generate random size
@@ -29,8 +30,10 @@ const generateStars = (container: HTMLElement, numStars: number) => {
     star.style.opacity = (Math.random() * (0.7 - 0.2) + 0.2).toString(); // Generate random opacity
     star.style.width = `${starSize}px`;
     star.style.height = `${starSize}px`;
-    container.appendChild(star);
-  }
+    return star;
+  });
+
+  container.append(...stars);
 };
 
 const StartScreen: React.FC = () => {
@@ -58,6 +61,12 @@ const StartScreen: React.FC = () => {
   return (
     <div className="start-container">
       <div className="star-container"></div>
+      <div
+        className="sun-container"
+        style={isGame ? { left: "-130vw" } : { left: "-100vw" }}
+      >
+        <Sun />
+      </div>
       <div className="planets-container">
         {PLANETS.map((planet) => (
           <Planet
