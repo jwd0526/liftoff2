@@ -9,15 +9,15 @@
 }
 
 .inactive {
- transition-duration: 2s;
- justify-content: center;
- align-items: center
+  transition-duration: 2s;
+  justify-content: center;
+  align-items: center;
 }
 .active {
   transition-duration: 2s;
   width: 70vw;
   height: 70vw;
-  margin-top: 200vh;
+  top: 78vh;
   left: 13.5vw;
 }
 
@@ -25,5 +25,4 @@
   position: absolute;
   display: flex;
   flex-direction: column;
- 
 }

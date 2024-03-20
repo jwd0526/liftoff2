@@ -4,6 +4,7 @@ import Planet from "../Planet";
 import { planetType } from "../Planet/Planet";
 import RightArrow from "../../images/rightArrow.svg";
 import Sun from "../Sun";
+import Rocket from "../Rocket";
 
 const PLANETS = [
   "mercury",
@@ -45,7 +46,6 @@ const StartScreen: React.FC = () => {
     setPlanetObject(planet);
     const planetString = planet.classList[0].toString().split("-")[0];
     setSelectedPlanet(planetString);
-    planet.classList.add("active-planet");
     setIsGame(true);
   };
 
@@ -60,11 +60,11 @@ const StartScreen: React.FC = () => {
 
   return (
     <div className="start-container">
+      <Rocket isGame launched />
       <div className="star-container"></div>
       <div
         className="sun-container"
-        style={isGame ? { left: "-130vw" } : { left: "-100vw" }}
-      >
+        style={isGame ? { left: "-130vw" } : { left: "-100vw" }}>
         <Sun />
       </div>
       <div className="planets-container">

@@ -1,0 +1,12 @@
+@keyframes orbit {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg); /* Complete one full rotation */
+  }
+}
+
+.orbiting {
+  animation: orbit 4s linear infinite; /* Consider changing 'linear' to an easing function */
+}

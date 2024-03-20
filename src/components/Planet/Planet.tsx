@@ -92,8 +92,7 @@ const Planet: React.FC<PlanetProps> = ({
           if (planetRef.current) {
             onClick(planetRef.current);
           }
-        }}
-      >
+        }}>
         <img
           className={`${planet}-img planet-img`}
           src={planetSrc}
