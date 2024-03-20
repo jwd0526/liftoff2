@@ -1,0 +1,32 @@
+.start-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: black;
+}
+
+.planets-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  z-index: 1;
+}
+
+.star-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  top: 0;
+}
+
+.star {
+  position: absolute;
+  background-color: white;
+  overflow: hidden;
+  z-index: 0;
+}
