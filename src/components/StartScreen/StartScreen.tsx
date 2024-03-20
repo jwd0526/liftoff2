@@ -1,6 +1,8 @@
 import "./StartScreen.css";
 import React, { useEffect, useState } from "react";
-import PlanetImage from "../../components/PlanetImage";
+import Planet from "../Planet";
+import { planetType } from "../Planet/Planet";
+import RightArrow from "../../images/rightArrow.svg";
 
 const PLANETS = [
   "mercury",
@@ -33,10 +35,15 @@ const generateStars = (container: HTMLElement, numStars: number) => {
 
 const StartScreen: React.FC = () => {
   const [selectedPlanet, setSelectedPlanet] = useState<string | null>(null);
+  const [planetObject, setPlanetObject] = useState<HTMLDivElement | null>(null);
+  const [isGame, setIsGame] = useState<boolean>(false);
+
   const managePlanetClick = (planet: HTMLDivElement) => {
+    setPlanetObject(planet);
     const planetString = planet.classList[0].toString().split("-")[0];
     setSelectedPlanet(planetString);
     planet.classList.add("active-planet");
+    setIsGame(true);
   };
 
   useEffect(() => {
@@ -53,14 +60,27 @@ const StartScreen: React.FC = () => {
       <div className="star-container"></div>
       <div className="planets-container">
         {PLANETS.map((planet) => (
-          <PlanetImage
+          <Planet
             key={planet}
-            planet={planet}
-            scale={selectedPlanet === planet ? 3 : 1}
+            planet={planet as planetType}
             onClick={managePlanetClick}
             isSelected={selectedPlanet === planet}
+            isGame={isGame}
           />
         ))}
+      </div>
+      <div className="right-img-box">
+        <img
+          className="right-img"
+          src={RightArrow}
+          alt="right"
+          onClick={() => {
+            setIsGame(false);
+            setSelectedPlanet(null);
+            planetObject?.classList.remove("active");
+            planetObject?.classList.add("inactive");
+          }}
+        />
       </div>
     </div>
   );

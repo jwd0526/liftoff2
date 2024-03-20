@@ -1,0 +1,22 @@
+.planet-img-box {
+  position: absolute;
+  transition-duration: 0.5s;
+  margin: 30px;
+}
+
+.inactive:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.inactive {
+ transition-duration: 2s;
+ 
+}
+.active {
+  transition-duration: 2s;
+  width: 70vw;
+  height: 70vw;
+  margin-top: 200vh;
+  left: 13.5vw;
+}
