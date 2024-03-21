@@ -1,12 +1,20 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import "./GameScreen.css";
 import { planetType } from "../Planet/Planet";
 
 interface GameScreenProps {
-  planet: planetType;
+  planet: string | null;
+  children: ReactNode;
+  isGame: boolean;
 }
 
-const GameScreen: React.FC<GameScreenProps> = ({ planet }) => {
+const GameScreen: React.FC<GameScreenProps> = ({
+  planet,
+  children,
+  isGame,
+}) => {
+  const gameClass = isGame ? "game-on" : "game-off";
+
   let planetPercs: string;
   switch (planet) {
     case "mercury":
@@ -34,10 +42,17 @@ const GameScreen: React.FC<GameScreenProps> = ({ planet }) => {
       planetPercs = "Neptune specific value";
       break;
     default:
-      planetPercs = "default value";
+      planetPercs = "Upgrades";
       break;
   }
-  return <div className="game-container"></div>;
+  return (
+    <div className={"game-container"}>
+      <div className={`planet-perks-box ${gameClass}`}>
+        <p className="planet-perks">{planetPercs}</p>
+      </div>
+      {children}
+    </div>
+  );
 };
 
 export default GameScreen;

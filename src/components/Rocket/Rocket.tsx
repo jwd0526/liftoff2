@@ -1,41 +1,48 @@
-import React from "react";
+import React, { useMemo, useRef } from "react";
+import "./Rocket.css";
 import RocketImg from "../../images/rocket.svg";
 
 interface RocketProps {
   launched: boolean;
   isGame: boolean;
+  onRocketClick: (rocketObject: HTMLDivElement) => void;
 }
 
-const orbitStyle = (): React.CSSProperties[] => {
-  return [
-    {
-      position: "absolute",
-      width: "70vw",
-      height: "70vw",
-      top: "78vh",
-      left: "13.5vw",
-    },
-    {
-      position: "relative",
-      width: "5vw",
-      height: "5vw",
-    },
-    {
-      width: "100%",
-      height: "100%",
-    },
-  ];
-};
+const Rocket: React.FC<RocketProps> = ({ launched, isGame, onRocketClick }) => {
+  const rocketRef = useRef<HTMLDivElement | null>(null);
+  const isUpgrading = rocketRef.current?.classList.contains("upgrades");
+  const currentClass = useMemo(() => {
+    if (isGame && !isUpgrading) {
+      return "orbiting";
+    } else if (!isUpgrading) {
+      return "pre-launch";
+    } else {
+      return "upgrades";
+    }
+  }, [isGame, isUpgrading]);
 
-const Rocket: React.FC<RocketProps> = ({ launched }) => {
+  const imgBoxClass = useMemo(() => {
+    if (isGame && !isUpgrading) {
+      return "orbiting-img-box";
+    } else if (!isUpgrading) {
+      return "pre-launch-img-box";
+    } else {
+      return "";
+    }
+  }, [isGame, isUpgrading]);
+
   return (
-    <div className="rocket-container orbiting" style={orbitStyle()[0]}>
-      <div className="rocket-img-box" style={orbitStyle()[1]}>
+    <div ref={rocketRef} className={`rocket-container ${currentClass}`}>
+      <div className={`rocket-img-box ${imgBoxClass}`}>
         <img
           className="rocket-img"
           src={RocketImg}
           alt="rocket"
-          style={orbitStyle()[2]}
+          onClick={() => {
+            if (rocketRef.current) {
+              onRocketClick(rocketRef.current);
+            }
+          }}
         />
       </div>
     </div>

@@ -84,23 +84,26 @@ const Planet: React.FC<PlanetProps> = ({
     : getDefaultStyle();
 
   return (
-    <div className={`single-planet ${activeClass}`} style={planetStyle}>
-      <div
-        ref={planetRef}
-        className={`${planet}-img-box planet-img-box`}
-        onClick={() => {
-          if (planetRef.current) {
-            onClick(planetRef.current);
-          }
-        }}>
-        <img
-          className={`${planet}-img planet-img`}
-          src={planetSrc}
-          alt={`${planet}`}
-          style={{ height: "100%", width: "100%" }}
-        />
+    <>
+      <div className={`single-planet ${activeClass}`} style={planetStyle}>
+        <div
+          ref={planetRef}
+          className={`${planet}-img-box planet-img-box`}
+          onClick={() => {
+            if (planetRef.current) {
+              onClick(planetRef.current);
+            }
+          }}
+        >
+          <img
+            className={`${planet}-img planet-img`}
+            src={planetSrc}
+            alt={`${planet}`}
+            style={{ height: "100%", width: "100%" }}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
