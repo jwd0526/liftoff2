@@ -27,7 +27,7 @@ const Rocket: React.FC<RocketProps> = ({ launched, isGame, onRocketClick }) => {
     } else if (!isUpgrading) {
       return "pre-launch-img-box";
     } else {
-      return "";
+      return "upgrades-img-box";
     }
   }, [isGame, isUpgrading]);
 

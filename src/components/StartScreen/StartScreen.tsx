@@ -42,6 +42,9 @@ const StartScreen: React.FC = () => {
   const [selectedPlanet, setSelectedPlanet] = useState<string | null>(null);
   const [planetObject, setPlanetObject] = useState<HTMLElement | null>(null);
   const [rocketObject, setRocketObject] = useState<HTMLElement | null>(null);
+  const [rocketBoxObject, setRocketBoxObject] = useState<HTMLElement | null>(
+    null
+  );
   const [isGame, setIsGame] = useState<boolean>(false);
   const rightButtonRef = useRef<HTMLImageElement | null>(null);
   const starContainerRef = useRef<HTMLDivElement | null>(null);
@@ -57,8 +60,14 @@ const StartScreen: React.FC = () => {
 
   const manageRocketClick = (rocket: HTMLDivElement) => {
     setRocketObject(rocket);
+    const upgradesBox: HTMLDivElement =
+      rocket.firstElementChild as HTMLDivElement;
+    setRocketBoxObject(upgradesBox);
+
     rocket.classList.remove("pre-launch");
     rocket.classList.add("upgrades");
+    rocketBoxObject?.classList.remove("pre-launch-img-box");
+    rocketBoxObject?.classList.add("upgrades-img-box");
     setIsGame(true);
   };
 
@@ -104,6 +113,7 @@ const StartScreen: React.FC = () => {
               planetObject?.classList.remove("active");
               planetObject?.classList.add("inactive");
               rocketObject?.classList.remove("upgrades");
+              rocketBoxObject?.classList.remove("upgrades-img-box");
             }}
           />
         </div>

@@ -3,7 +3,7 @@
     transform: rotate(0deg);
   }
   100% {
-    transform: rotate(-360deg);
+    transform: rotate(360deg);
   }
 }
 
@@ -18,38 +18,30 @@
 
 .rocket-container {
   transition-duration: 1s;
-}
-
-/* Styles for the rocket container when it's orbiting */
-.orbiting {
   position: absolute;
   display: flex;
-  flex-direction: row-reverse;
-  width: 70vw;
-  height: 70vw;
-  top: 78vh;
-  left: 13.5vw;
-  animation: orbit 4000ms linear infinite;
+  flex-direction: column-reverse;
 }
 
-/* Styles for the rocket image box when it's orbiting */
-.orbiting-img-box {
+.rocket-img-box {
   position: relative;
-  width: 5vw;
-  height: 5vw;
-  transform: rotate(-90deg);
-  opacity: 1;
+  transition-duration: 1s;
 }
 
-/* Common styles for the rocket image */
 .rocket-img {
   width: 100%;
   height: 100%;
 }
 
-/* Styles for the rocket container before launch */
+.orbiting {
+  width: 70vw;
+  height: 70vw;
+  top: 78vh;
+  left: 13.5vw;
+  animation: orbit 4s linear infinite;
+}
+
 .pre-launch {
-  position: absolute;
   width: 5vw;
   height: 5vw;
   top: 78vh;
@@ -57,14 +49,32 @@
   animation: bob 1s alternate infinite;
   opacity: 0.5;
   z-index: 2;
+}
+
+.upgrades {
+  width: 30vw;
+  height: 30vw;
+  top: 23vh;
+  left: 35vw;
+  z-index: 2;
+}
+
+.pre-launch-img-box {
+  width: 5vw;
+  height: 5vw;
   transform: rotate(-45deg);
 }
 
-/* Styles for the rocket image box before launch */
-.pre-launch-img-box {
-  transform: rotate(-45deg);
+.orbiting-img-box {
   width: 5vw;
   height: 5vw;
+  transform: rotate(-90deg);
+}
+
+.upgrades-img-box {
+  width: 30vw;
+  height: 30vw;
+  transform: rotate(-45deg);
 }
 
 .pre-launch:hover {
@@ -72,14 +82,4 @@
   opacity: 1;
 }
 
-.upgrades {
-  position: absolute;
-  transition-duration: 1000ms;
-  transform: rotate(-45deg);
-  top: 23vh;
-  left: 35vw;
-  width: 30vw;
-  height: 30vw;
-  z-index: 2;
-}
 /* TODO: update how rocket adopts prelaunch class from upgrades */
