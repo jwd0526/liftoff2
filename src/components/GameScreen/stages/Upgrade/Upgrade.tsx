@@ -42,10 +42,10 @@ const Upgrade: React.FC<UpgradeProps> = ({ isGame }) => {
 
   const [perksUnlocked, setPerksUnlocked] = useState<boolean[]>([
     true,
-    false,
-    false,
-    false,
-    false,
+    true,
+    true,
+    true,
+    true,
     false,
   ]);
 

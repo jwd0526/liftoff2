@@ -7,12 +7,37 @@ interface IconProps {
 const EnhancedNav: React.FC<IconProps> = ({ unlocked }) => {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
       width="100%"
-      height="100%">
-      <path fill="none" d="M0 0h24v24H0z" />
-      <path d="M20 18.18l-1.4-1.39a8 8 0 1 0-2.12 2.12l1.39 1.4a10 10 0 1 1 2.13-2.13zm-1.42-9.74a6 6 0 1 0-8.49 8.49 6 6 0 0 0 8.49-8.49z" />
+      height="100%"
+      viewBox="0 0 100 100"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <rect x="0.5" y="0.5" width="99" height="99" rx="1" stroke="black" />
+      <circle
+        cx="50.5"
+        cy="47.5"
+        r="33"
+        stroke="black"
+        stroke-width="5"
+        fill={unlocked ? `#CDEBFC0` : `black`}
+      />
+      <path
+        d="M46.6666 44.5211L64.5354 30.5474L53.4323 50.3282L46.6666 44.5211Z"
+        fill={unlocked ? `#CDEBFC` : `black`}
+        stroke="black"
+        stroke-width="0.5"
+      />
+      <path
+        d="M53.2228 50.7585L35.0201 65.1192L46.4551 44.9496L53.2228 50.7585Z"
+        fill={unlocked ? `#FF0000` : `black`}
+        stroke="black"
+        stroke-width="0.5"
+      />
+      <path
+        d="M66.7728 64V49.5H74V64V64.5H74.5H87V71.5H74.5H74V72V86H66.7728V72V71.5H66.2728H53.5V64.5H66.2728H66.7728V64Z"
+        fill={unlocked ? `#FF0000` : `black`}
+        stroke="black"
+      />
     </svg>
   );
 };
