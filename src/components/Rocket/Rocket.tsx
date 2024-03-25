@@ -1,6 +1,8 @@
-import React, { useMemo, useRef } from "react";
 import "./Rocket.css";
 import RocketImg from "../../images/rocket.svg";
+
+import React, { useRef } from "react";
+import classNames from "classnames";
 
 interface RocketProps {
   launched: boolean;
@@ -11,25 +13,18 @@ interface RocketProps {
 const Rocket: React.FC<RocketProps> = ({ launched, isGame, onRocketClick }) => {
   const rocketRef = useRef<HTMLDivElement | null>(null);
   const isUpgrading = rocketRef.current?.classList.contains("upgrades");
-  const currentClass = useMemo(() => {
-    if (isGame && !isUpgrading) {
-      return "orbiting";
-    } else if (!isUpgrading) {
-      return "pre-launch";
-    } else {
-      return "upgrades";
-    }
-  }, [isGame, isUpgrading]);
 
-  const imgBoxClass = useMemo(() => {
-    if (isGame && !isUpgrading) {
-      return "orbiting-img-box";
-    } else if (!isUpgrading) {
-      return "pre-launch-img-box";
-    } else {
-      return "upgrades-img-box";
-    }
-  }, [isGame, isUpgrading]);
+  const currentClass = classNames({
+    orbiting: isGame && !isUpgrading,
+    "pre-launch": !isGame && !isUpgrading,
+    upgrades: isGame && isUpgrading,
+  });
+
+  const imgBoxClass = classNames({
+    "orbiting-img-box": isGame && !isUpgrading,
+    "pre-launch-img-box": !isGame && !isUpgrading,
+    "upgrades-img-box": isGame && isUpgrading,
+  });
 
   return (
     <div ref={rocketRef} className={`rocket-container ${currentClass}`}>

@@ -1,0 +1,67 @@
+.directional-line {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  width: 20vw;
+  height: 10vh;
+}
+
+.line {
+  position: relative;
+  background-color: #cdebfc;
+  height: 1.5px;
+  z-index: -2;
+}
+
+.fuel-line {
+  display: flex;
+  align-items: flex-end;
+  top: 25%;
+  left: 55.2%;
+}
+
+.fuel-l1 {
+  width: 6vw;
+  transform: rotate(-45deg);
+  top: 45%;
+  left: 4.4%;
+}
+
+.fuel-l2 {
+  width: 10vw;
+}
+
+.thrusters-line {
+  flex-direction: row;
+  top: 71%;
+  left: 52%;
+}
+
+.thrusters-l1 {
+  width: 6vw;
+  transform: rotate(45deg);
+  top: 45%;
+  left: 4.4%;
+}
+
+.thrusters-l2 {
+  width: 13.2vw;
+  top: 89%;
+}
+
+.hull-line {
+  flex-direction: row-reverse;
+  top: 40%;
+  left: 24%;
+}
+
+.hull-l1 {
+  width: 6vw;
+  transform: rotate(45deg);
+  top: 45%;
+}
+
+.hull-l2 {
+  width: 10vw;
+  left: 4.4%;
+}

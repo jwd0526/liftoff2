@@ -2,4 +2,11 @@ body {
   margin: 0;
   overflow-x: hidden;
   overflow-y: hidden;
+  font-family: "pixelSans";
+}
+
+@font-face {
+  font-family: "pixelSans";
+  src: local("pixelSans"),
+    url("./fonts/PixelifySans-Regular.ttf") format("truetype");
 }
