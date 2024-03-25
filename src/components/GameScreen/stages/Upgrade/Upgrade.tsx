@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Upgrade.css";
 import UpgradePanel from "./UpgradePanel";
 import classNames from "classnames";
+import AdvancedSensors from "./perks/AdvancedSensors";
+import AerofoilStabilizers from "./perks/AerofoilStabilizers";
+import BoostedThrusters from "./perks/BoostedThrusters";
+import EnhancedNav from "./perks/EnhancedNav";
+import HeatShielding from "./perks/HeatShielding";
+import MagneticProbe from "./perks/MagneticProbe";
 
 const UPGRADE_TYPE: string[] = ["Thrusters", "Fuel Cell", "Hull"];
 
@@ -34,10 +40,47 @@ const Upgrade: React.FC<UpgradeProps> = ({ isGame }) => {
     hidden: !isGame,
   });
 
+  const [perksUnlocked, setPerksUnlocked] = useState<boolean[]>([
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
+
+  const perks: React.ReactNode[] = [
+    <AdvancedSensors unlocked={perksUnlocked[0]} />,
+    <AerofoilStabilizers unlocked={perksUnlocked[1]} />,
+    <BoostedThrusters unlocked={perksUnlocked[2]} />,
+    <EnhancedNav unlocked={perksUnlocked[3]} />,
+    <HeatShielding unlocked={perksUnlocked[4]} />,
+    <MagneticProbe unlocked={perksUnlocked[5]} />,
+  ];
+
+  const handlePerkClick = (perk: React.ReactNode, index: number) => {};
+
   return (
     <div className={`upgrade-container ${visibleClass} hidden`}>
       <Lines />
       <div className="upgrade-container">
+        <div className="perk-panel-box">
+          <div className="perk-panel-content">
+            <h1 className="perk-panel-header">PERKS</h1>
+            <div className="perks-grid">
+              {perks.map((perk, index) => (
+                <div
+                  key={index}
+                  className={`perk-grid-element p${index + 1}`}
+                  onClick={() => {
+                    handlePerkClick(perk, index);
+                  }}>
+                  {perk}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
         <UpgradePanel upgradeType={UPGRADE_TYPE[0]} />
         <UpgradePanel upgradeType={UPGRADE_TYPE[1]} />
         <UpgradePanel upgradeType={UPGRADE_TYPE[2]} />

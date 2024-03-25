@@ -50,3 +50,53 @@
   top: 60%;
   left: 70%;
 }
+
+.perk-panel-box {
+  position: absolute;
+  height: 30vh;
+  width: 40vh;
+  background-color: #000518;
+  border: 5px solid #cdebfc;
+  border-radius: 5px;
+  top: 62%;
+  left: 15%;
+}
+.perk-panel-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.perk-panel-header {
+  margin: 5% auto 4% auto;
+}
+
+.perk-panel-text {
+  margin: 3% 5% 3% 5%;
+}
+
+.perks-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4.5vh;
+}
+
+.perk-grid-element {
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px black;
+  padding: 5%;
+  background-color: #cdebfc15;
+}
+
+.perk-grid-element:hover {
+  cursor: pointer;
+  background-color: #cdebfc35;
+}
+
+.perk-grid-element:active {
+  background-color: #cdebfc20;
+  box-shadow: 1px 1px 1px black;
+}
