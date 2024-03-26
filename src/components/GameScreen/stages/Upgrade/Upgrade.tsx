@@ -46,7 +46,7 @@ const Upgrade: React.FC<UpgradeProps> = ({ isGame }) => {
     true,
     true,
     true,
-    false,
+    true,
   ]);
 
   const perks: React.ReactNode[] = [
@@ -66,7 +66,7 @@ const Upgrade: React.FC<UpgradeProps> = ({ isGame }) => {
       <div className="upgrade-container">
         <div className="perk-panel-box">
           <div className="perk-panel-content">
-            <h1 className="perk-panel-header">PERKS</h1>
+            <h1 className="perk-panel-header">TECH EQUIPMENT</h1>
             <div className="perks-grid">
               {perks.map((perk, index) => (
                 <div
