@@ -9,6 +9,7 @@ import Jupiter from "./stages/Jupiter";
 import Saturn from "./stages/Saturn";
 import Uranus from "./stages/Uranus";
 import Neptune from "./stages/Neptune";
+import PlayButton from "./PlayButton";
 
 interface GameScreenProps {
   planet: string | null;
@@ -67,6 +68,9 @@ const GameScreen: React.FC<GameScreenProps> = ({
 
   return (
     <div className={"game-container"}>
+      <div className="play-button">
+        <PlayButton style="" isGame={isGame} onPlayClick={() => {}} />
+      </div>
       {isGame ? planetComponent : null}
       <div className={`planet-perks-box ${gameClass}`}>
         <p className="planet-perks">{planetPercs}</p>

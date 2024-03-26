@@ -1,6 +1,8 @@
 .planet-img-box {
   position: relative;
   transition-duration: 0.5s;
+  width: auto;
+  height: auto;
 }
 
 .inactive:hover {
@@ -16,10 +18,12 @@
 }
 .active {
   transition-duration: 2s;
-  width: 70vw;
-  height: 70vw;
-  top: 78vh;
-  left: 13.5vw;
+  width: 30vw;
+  height: 30vw;
+  top: 25vh;
+  left: 35vw;
+  justify-content: center;
+  align-items: center;
 }
 
 .single-planet {
