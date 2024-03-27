@@ -21,9 +21,10 @@ export type planetType =
 
 interface PlanetProps {
   planet: planetType;
-  onClick: (planet: HTMLDivElement) => void;
+  onClick: (planet: HTMLDivElement, planetScale: number) => void;
   isSelected: boolean;
   isGame: boolean;
+  gameStarted: boolean;
 }
 
 const planetProperties = {
@@ -42,6 +43,7 @@ const Planet: React.FC<PlanetProps> = ({
   onClick,
   isSelected,
   isGame,
+  gameStarted,
 }) => {
   const {
     src: planetSrc,
@@ -51,6 +53,7 @@ const Planet: React.FC<PlanetProps> = ({
   } = planetProperties[planet] || {};
 
   const activeClass = `${isSelected ? "active" : "inactive"}`;
+  const gameClass = `${gameStarted ? "in-game" : ""}`;
 
   const planetRef = useRef<HTMLDivElement | null>(null);
 
@@ -85,13 +88,15 @@ const Planet: React.FC<PlanetProps> = ({
 
   return (
     <>
-      <div className={`single-planet ${activeClass}`} style={planetStyle}>
+      <div
+        className={`single-planet ${activeClass} ${gameClass}`}
+        style={planetStyle}>
         <div
           ref={planetRef}
           className={`${planet}-img-box planet-img-box`}
           onClick={() => {
             if (planetRef.current) {
-              onClick(planetRef.current);
+              onClick(planetRef.current, planetScale);
             }
           }}>
           <img

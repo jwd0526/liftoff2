@@ -17,6 +17,7 @@ const PLANETS = [
   "uranus",
   "neptune",
 ];
+const ratio: number = window.innerWidth / window.innerHeight;
 
 const generateStars = (container: HTMLDivElement, numStars: number) => {
   const containerRect = container.getBoundingClientRect();
@@ -46,32 +47,36 @@ const App: React.FC = () => {
   const [rocketBoxObject, setRocketBoxObject] = useState<HTMLElement | null>(
     null
   );
+  const [rocketAnimation, setRocketAnimation] = useState<string>("unset");
   const [isGame, setIsGame] = useState<boolean>(false);
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [angleFeedback, setAngleFeedback] = useState<string>("");
+  const [planetScale, setPlanetScale] = useState<number>(1);
 
-  const managePlanetClick = (planet: HTMLDivElement) => {
-    setPlanetObject(planet.parentElement);
-    const planetString = planet.classList[0].toString().split("-")[0];
-    setSelectedPlanet(planetString);
+  const managePlanetClick = (planet: HTMLDivElement, planetScale: number) => {
     setIsGame(true);
+    setGameStarted(false);
+
     rocketObject?.classList.remove("upgrades");
     rocketBoxObject?.classList.remove("upgrades-img-box");
     rocketObject?.classList.remove("launched");
     rocketBoxObject?.classList.remove("launched-img-box");
-    setGameStarted(false);
+    setPlanetObject(planet.parentElement);
+    const planetString = planet.classList[0].toString().split("-")[0];
+    setSelectedPlanet(planetString);
+    const orbitDuration = -1 * Math.sqrt(planetScale) + 2.75;
+    setPlanetScale(planetScale);
+    setRocketAnimation(`orbit ${orbitDuration}s linear infinite forwards`);
   };
 
   const manageRocketClick = () => {
-    const upgradesBox: HTMLDivElement =
-      rocketObject?.firstElementChild as HTMLDivElement;
-    setRocketBoxObject(upgradesBox);
     rocketObject?.classList.remove("pre-launch");
     rocketObject?.classList.add("upgrades");
     rocketBoxObject?.classList.remove("pre-launch-img-box");
     rocketBoxObject?.classList.add("upgrades-img-box");
     setGameStarted(false);
     setIsGame(true);
+    setRocketAnimation("unset");
   };
 
   const manageRightClick = () => {
@@ -82,11 +87,13 @@ const App: React.FC = () => {
     rocketObject?.classList.remove("upgrades");
     rocketBoxObject?.classList.remove("upgrades-img-box");
     setGameStarted(false);
+    setRocketAnimation("unset");
   };
 
   const getCurrentRotation = (el: Element): number => {
     const computedStyle = getComputedStyle(el);
     const matrixString = computedStyle.transform;
+    console.log(matrixString);
     const matrixValues = matrixString.match(/[-0-9.]+/g);
     if (matrixValues && matrixValues.length === 6) {
       const [a, b] = matrixValues.map(parseFloat);
@@ -101,6 +108,12 @@ const App: React.FC = () => {
   const managePlayClick = (perks: string) => {
     setGameStarted(true);
     const angle = getCurrentRotation(rocketObject as Element) - 45;
+    console.log(angle);
+    rocketBoxObject?.style.setProperty(
+      "transform",
+      `rotate(${-90 - angle}deg)`
+    );
+
     setAngleFeedback(
       angle > -5 && angle < 5
         ? "Perfect"
@@ -114,7 +127,14 @@ const App: React.FC = () => {
         ? "Early"
         : "Error"
     );
+
+    rocketObject?.style.setProperty("animation-play-state", "paused");
+    console.log(rocketBoxObject);
   };
+
+  useEffect(() => {
+    rocketObject?.style.setProperty("animation", `${rocketAnimation}`);
+  }, [rocketAnimation, rocketObject?.style]);
 
   useEffect(() => {
     const starContainer = starContainerRef.current;
@@ -127,7 +147,7 @@ const App: React.FC = () => {
       <div className="star-container" ref={starContainerRef} />
       <StartScreen isGame={isGame} onRightClick={manageRightClick}>
         <div
-          className={`angle-feedback-box`}
+          className={`angle-feedback-box ${gameStarted ? "in-game" : ""}`}
           style={
             gameStarted ? { visibility: "visible" } : { visibility: "hidden" }
           }>
@@ -141,7 +161,12 @@ const App: React.FC = () => {
           <Rocket
             gameStarted={gameStarted}
             isGame={isGame}
-            getRocketObject={(rocketObject) => setRocketObject(rocketObject)}
+            getRocketObject={(rocketObject) => {
+              setRocketObject(rocketObject);
+              const rocketBox: HTMLDivElement =
+                rocketObject?.firstElementChild as HTMLDivElement;
+              setRocketBoxObject(rocketBox);
+            }}
             onRocketClick={manageRocketClick}
           />
         </GameScreen>
@@ -154,6 +179,7 @@ const App: React.FC = () => {
               onClick={managePlanetClick}
               isSelected={selectedPlanet === planet}
               isGame={isGame}
+              gameStarted={gameStarted}
             />
           ))}
         </div>

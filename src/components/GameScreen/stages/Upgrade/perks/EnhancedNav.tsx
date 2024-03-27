@@ -18,20 +18,20 @@ const EnhancedNav: React.FC<IconProps> = ({ unlocked }) => {
         cy="47.5"
         r="33"
         stroke="black"
-        stroke-width="5"
+        strokeWidth="5"
         fill={unlocked ? `#CDEBFC0` : `black`}
       />
       <path
         d="M46.6666 44.5211L64.5354 30.5474L53.4323 50.3282L46.6666 44.5211Z"
         fill={unlocked ? `#CDEBFC` : `black`}
         stroke="black"
-        stroke-width="0.5"
+        strokeWidth="0.5"
       />
       <path
         d="M53.2228 50.7585L35.0201 65.1192L46.4551 44.9496L53.2228 50.7585Z"
         fill={unlocked ? `#FF0000` : `black`}
         stroke="black"
-        stroke-width="0.5"
+        strokeWidth="0.5"
       />
       <path
         d="M66.7728 64V49.5H74V64V64.5H74.5H87V71.5H74.5H74V72V86H66.7728V72V71.5H66.2728H53.5V64.5H66.2728H66.7728V64Z"

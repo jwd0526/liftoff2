@@ -32,6 +32,8 @@ const GameScreen: React.FC<GameScreenProps> = ({
   let planetPercs: string;
   let planetComponent: ReactNode | null = null;
 
+  const inGameClass = gameStarted ? "in-game" : "";
+
   switch (planet) {
     case "mercury":
       planetPercs = "Mercury specific value";
@@ -75,7 +77,7 @@ const GameScreen: React.FC<GameScreenProps> = ({
     <div className={"game-container"}>
       <div
         style={planetPercs === "Upgrades" ? { opacity: 0 } : {}}
-        className={`launch-guide-box ${gameClass}`}>
+        className={`launch-guide-box ${gameClass} ${inGameClass}`}>
         <img
           className="launch-guide-img"
           src={launchAngle}
@@ -85,7 +87,7 @@ const GameScreen: React.FC<GameScreenProps> = ({
       <div
         style={planetPercs === "Upgrades" ? { opacity: 0 } : {}}
         ref={playButton}
-        className={`play-button ${gameClass}`}>
+        className={`play-button ${gameClass} ${inGameClass}`}>
         <PlayButton
           onPlayClick={() => {
             onPlayClick(planetPercs);
@@ -93,7 +95,7 @@ const GameScreen: React.FC<GameScreenProps> = ({
         />
       </div>
       {isGame ? planetComponent : null}
-      <div className={`planet-perks-box ${gameClass}`}>
+      <div className={`planet-perks-box ${gameClass} ${inGameClass}`}>
         <p className="planet-perks">{planetPercs}</p>
       </div>
 

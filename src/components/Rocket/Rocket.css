@@ -38,18 +38,21 @@
   height: 32vw;
   top: 23vh;
   left: 34vw;
-  animation: orbit 1s linear infinite forwards;
-  animation-play-state: running;
 }
 
 .launched {
-  transition-duration: 200ms;
+  /* width: 5vw;
+  height: 5vw;
+  left: 47.5vw;
+  top: 40vh;
+  opacity: 1;
+  z-index: 2;
+  transition-timing-function: cubic-bezier(0.1, 0.7, 1, 0.1);
+  transition-duration: 0.75s; */
   width: 32vw;
   height: 32vw;
   top: 23vh;
   left: 34vw;
-  animation: orbit 1s linear infinite forwards;
-  animation-play-state: paused;
 }
 
 .pre-launch {
@@ -57,7 +60,6 @@
   height: 5vw;
   top: 78vh;
   left: 90vw;
-  animation: bob 1s alternate infinite;
   opacity: 0.5;
   z-index: 2;
 }
