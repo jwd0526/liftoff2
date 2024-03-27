@@ -38,7 +38,18 @@
   height: 32vw;
   top: 23vh;
   left: 34vw;
-  animation: orbit 2.5s linear infinite;
+  animation: orbit 1s linear infinite forwards;
+  animation-play-state: running;
+}
+
+.launched {
+  transition-duration: 200ms;
+  width: 32vw;
+  height: 32vw;
+  top: 23vh;
+  left: 34vw;
+  animation: orbit 1s linear infinite forwards;
+  animation-play-state: paused;
 }
 
 .pre-launch {
@@ -66,6 +77,12 @@
 }
 
 .orbiting-img-box {
+  width: 5vw;
+  height: 5vw;
+  transform: rotate(-90deg);
+}
+
+.launched-img-box {
   width: 5vw;
   height: 5vw;
   transform: rotate(-90deg);

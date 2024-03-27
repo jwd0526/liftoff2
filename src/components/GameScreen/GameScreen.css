@@ -21,16 +21,21 @@
 }
 
 .game-on {
+  animation: move-in 2s forwards;
+  transition-duration: 1s;
   opacity: 1;
 }
 
 .game-off {
+  animation: move-out 2s forwards;
+  transition-duration: 1s;
   opacity: 0;
 }
 
 .planet-perks {
   color: white;
-  font-size: 20px;
+  font-size: 40px;
+  font-weight: bold;
 }
 
 .play-button {
@@ -38,10 +43,70 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 10vw;
-  height: 10vw;
-  top: 45vh;
-  left: 45vw;
+  width: 7vw;
+  height: 7vw;
+  top: 48.5vh;
+  left: 46.5vw;
   cursor: pointer;
   z-index: 2;
+  border-radius: 30%;
+  box-shadow: 0.3vh 0.3vh 0.3vh 0.3vh rgba(0, 0, 0, 0.404);
+}
+
+.play-button:hover {
+  transition-duration: 100ms;
+  box-shadow: 0.3vh 0.3vh 0.3vh 0.3vh rgba(0, 0, 0, 0.486);
+}
+
+.play-button:active {
+  transition-duration: 100ms;
+  transform: scale(0.98);
+  box-shadow: 0.15vh 0.15vh 0.15vh 0.15vh rgba(0, 0, 0, 0.486);
+}
+
+.launch-guide-box {
+  position: absolute;
+  width: 55vh;
+  height: 110vh;
+  top: 1.5vh;
+  left: 49.5vw;
+}
+
+.launch-guide-img {
+  width: 100%;
+  height: 100%;
+}
+
+.angle-feedback-box {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 48.5vh;
+  left: 78vw;
+  z-index: 2;
+}
+
+.angle-feedback {
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+@keyframes move-in {
+  0% {
+    transform: translateY(400%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes move-out {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(400%);
+  }
 }

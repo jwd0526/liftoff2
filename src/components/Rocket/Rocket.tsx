@@ -1,30 +1,42 @@
 import "./Rocket.css";
 import RocketImg from "../../images/rocket.svg";
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import classNames from "classnames";
 
 interface RocketProps {
-  launched: boolean;
   isGame: boolean;
-  onRocketClick: (rocketObject: HTMLDivElement) => void;
+  gameStarted: boolean;
+  getRocketObject: (rocketObject: HTMLDivElement) => void;
+  onRocketClick: () => void;
 }
 
-const Rocket: React.FC<RocketProps> = ({ launched, isGame, onRocketClick }) => {
+const Rocket: React.FC<RocketProps> = ({
+  gameStarted,
+  isGame,
+  getRocketObject,
+  onRocketClick,
+}) => {
   const rocketRef = useRef<HTMLDivElement | null>(null);
   const isUpgrading = rocketRef.current?.classList.contains("upgrades");
 
   const currentClass = classNames({
-    orbiting: isGame && !isUpgrading,
+    launched: gameStarted,
+    orbiting: isGame && !isUpgrading && !gameStarted,
     "pre-launch": !isGame && !isUpgrading,
     upgrades: isGame && isUpgrading,
   });
 
   const imgBoxClass = classNames({
-    "orbiting-img-box": isGame && !isUpgrading,
+    "launched-img-box": gameStarted,
+    "orbiting-img-box": isGame && !isUpgrading && !gameStarted,
     "pre-launch-img-box": !isGame && !isUpgrading,
     "upgrades-img-box": isGame && isUpgrading,
   });
+
+  useEffect(() => {
+    getRocketObject(rocketRef.current as HTMLDivElement);
+  }, [getRocketObject]);
 
   return (
     <div ref={rocketRef} className={`rocket-container ${currentClass}`}>
@@ -33,11 +45,7 @@ const Rocket: React.FC<RocketProps> = ({ launched, isGame, onRocketClick }) => {
           className="rocket-img"
           src={RocketImg}
           alt="rocket"
-          onClick={() => {
-            if (rocketRef.current) {
-              onRocketClick(rocketRef.current);
-            }
-          }}
+          onClick={onRocketClick}
         />
       </div>
     </div>

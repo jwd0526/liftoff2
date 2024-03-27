@@ -2,21 +2,18 @@ import React from "react";
 
 interface PlayButtonProps {
   onPlayClick: () => void;
-  isGame: boolean;
-  style: string;
 }
 
-const PlayButton: React.FC<PlayButtonProps> = ({ onPlayClick, isGame }) => {
+const PlayButton: React.FC<PlayButtonProps> = ({ onPlayClick }) => {
   return (
     <svg
       onClick={onPlayClick}
-      visibility={isGame ? "visible" : "hidden"}
       width="100%"
       height="100%"
       viewBox="0 0 314 314"
       fill="none"
       xmlns="http://www.w3.org/2000/svg">
-      <g clip-path="url(#clip0_1_6)">
+      <g clipPath="url(#clip0_1_6)">
         <g filter="url(#filter0_d_1_6)">
           <path
             d="M7 7H307V307H7V216.76V97.24H122.5V216.76L226 157L122.5 97.24H7V7Z"
@@ -27,13 +24,13 @@ const PlayButton: React.FC<PlayButtonProps> = ({ onPlayClick, isGame }) => {
           <path
             d="M226 157L122.5 216.756L122.5 97.2442L226 157Z"
             fill="black"
-            fill-opacity="0.01"
+            fillOpacity="0.01"
           />
         </g>
         <path
           d="M229 162.196L238 157L229 151.804L125.5 92.0481L116.5 86.8519V97.2442L116.5 216.756L116.5 227.148L125.5 221.952L229 162.196Z"
           stroke="black"
-          stroke-width="12"
+          strokeWidth="12"
         />
       </g>
       <rect
@@ -43,7 +40,7 @@ const PlayButton: React.FC<PlayButtonProps> = ({ onPlayClick, isGame }) => {
         height="300"
         rx="80"
         stroke="black"
-        stroke-width="13"
+        strokeWidth="13"
       />
       <defs>
         <filter
@@ -53,8 +50,8 @@ const PlayButton: React.FC<PlayButtonProps> = ({ onPlayClick, isGame }) => {
           width="308"
           height="308"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB">
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          colorInterpolationFilters="sRGB">
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -87,8 +84,8 @@ const PlayButton: React.FC<PlayButtonProps> = ({ onPlayClick, isGame }) => {
           width="143.5"
           height="165.081"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB">
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          colorInterpolationFilters="sRGB">
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend
             mode="normal"
             in="SourceGraphic"

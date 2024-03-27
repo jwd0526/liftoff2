@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useRef } from "react";
 import "./GameScreen.css";
 import Upgrade from "./stages/Upgrade";
 import Mercury from "./stages/Mercury";
@@ -10,20 +10,25 @@ import Saturn from "./stages/Saturn";
 import Uranus from "./stages/Uranus";
 import Neptune from "./stages/Neptune";
 import PlayButton from "./PlayButton";
+import launchAngle from "../../images/launch-angle.svg";
 
 interface GameScreenProps {
   planet: string | null;
   children: ReactNode;
   isGame: boolean;
+  gameStarted: boolean;
+  onPlayClick: (perks: string) => void;
 }
 
 const GameScreen: React.FC<GameScreenProps> = ({
   planet,
   children,
   isGame,
+  gameStarted,
+  onPlayClick,
 }) => {
-  const gameClass = isGame ? "game-on" : "game-off";
-
+  const playButton = useRef<HTMLDivElement | null>(null);
+  const gameClass = isGame && !gameStarted ? "game-on" : "game-off";
   let planetPercs: string;
   let planetComponent: ReactNode | null = null;
 
@@ -68,13 +73,30 @@ const GameScreen: React.FC<GameScreenProps> = ({
 
   return (
     <div className={"game-container"}>
-      <div className="play-button">
-        <PlayButton style="" isGame={isGame} onPlayClick={() => {}} />
+      <div
+        style={planetPercs === "Upgrades" ? { opacity: 0 } : {}}
+        className={`launch-guide-box ${gameClass}`}>
+        <img
+          className="launch-guide-img"
+          src={launchAngle}
+          alt="launch-guide"
+        />
+      </div>
+      <div
+        style={planetPercs === "Upgrades" ? { opacity: 0 } : {}}
+        ref={playButton}
+        className={`play-button ${gameClass}`}>
+        <PlayButton
+          onPlayClick={() => {
+            onPlayClick(planetPercs);
+          }}
+        />
       </div>
       {isGame ? planetComponent : null}
       <div className={`planet-perks-box ${gameClass}`}>
         <p className="planet-perks">{planetPercs}</p>
       </div>
+
       {children}
     </div>
   );

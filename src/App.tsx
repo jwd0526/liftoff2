@@ -47,6 +47,8 @@ const App: React.FC = () => {
     null
   );
   const [isGame, setIsGame] = useState<boolean>(false);
+  const [gameStarted, setGameStarted] = useState<boolean>(false);
+  const [angleFeedback, setAngleFeedback] = useState<string>("");
 
   const managePlanetClick = (planet: HTMLDivElement) => {
     setPlanetObject(planet.parentElement);
@@ -55,17 +57,20 @@ const App: React.FC = () => {
     setIsGame(true);
     rocketObject?.classList.remove("upgrades");
     rocketBoxObject?.classList.remove("upgrades-img-box");
+    rocketObject?.classList.remove("launched");
+    rocketBoxObject?.classList.remove("launched-img-box");
+    setGameStarted(false);
   };
 
-  const manageRocketClick = (rocket: HTMLDivElement) => {
+  const manageRocketClick = () => {
     const upgradesBox: HTMLDivElement =
-      rocket.firstElementChild as HTMLDivElement;
+      rocketObject?.firstElementChild as HTMLDivElement;
     setRocketBoxObject(upgradesBox);
-    setRocketObject(rocket);
-    rocket.classList.remove("pre-launch");
-    rocket.classList.add("upgrades");
+    rocketObject?.classList.remove("pre-launch");
+    rocketObject?.classList.add("upgrades");
     rocketBoxObject?.classList.remove("pre-launch-img-box");
     rocketBoxObject?.classList.add("upgrades-img-box");
+    setGameStarted(false);
     setIsGame(true);
   };
 
@@ -76,6 +81,39 @@ const App: React.FC = () => {
     planetObject?.classList.add("inactive");
     rocketObject?.classList.remove("upgrades");
     rocketBoxObject?.classList.remove("upgrades-img-box");
+    setGameStarted(false);
+  };
+
+  const getCurrentRotation = (el: Element): number => {
+    const computedStyle = getComputedStyle(el);
+    const matrixString = computedStyle.transform;
+    const matrixValues = matrixString.match(/[-0-9.]+/g);
+    if (matrixValues && matrixValues.length === 6) {
+      const [a, b] = matrixValues.map(parseFloat);
+      const rotation = Math.atan2(b, a);
+      const rotationDegrees = rotation * (180 / Math.PI);
+      return rotationDegrees;
+    } else {
+      return 0;
+    }
+  };
+
+  const managePlayClick = (perks: string) => {
+    setGameStarted(true);
+    const angle = getCurrentRotation(rocketObject as Element) - 45;
+    setAngleFeedback(
+      angle > -5 && angle < 5
+        ? "Perfect"
+        : angle > -25 && angle < -5
+        ? "Slightly Late"
+        : angle > 5 && angle < 25
+        ? "Slightly Early"
+        : angle < -25
+        ? "Late"
+        : angle > 25
+        ? "Early"
+        : "Error"
+    );
   };
 
   useEffect(() => {
@@ -88,8 +126,24 @@ const App: React.FC = () => {
     <div className="App">
       <div className="star-container" ref={starContainerRef} />
       <StartScreen isGame={isGame} onRightClick={manageRightClick}>
-        <GameScreen planet={selectedPlanet} isGame={isGame}>
-          <Rocket launched isGame={isGame} onRocketClick={manageRocketClick} />
+        <div
+          className={`angle-feedback-box`}
+          style={
+            gameStarted ? { visibility: "visible" } : { visibility: "hidden" }
+          }>
+          <p className="angle-feedback">{angleFeedback}</p>
+        </div>
+        <GameScreen
+          planet={selectedPlanet}
+          isGame={isGame}
+          onPlayClick={managePlayClick}
+          gameStarted={gameStarted}>
+          <Rocket
+            gameStarted={gameStarted}
+            isGame={isGame}
+            getRocketObject={(rocketObject) => setRocketObject(rocketObject)}
+            onRocketClick={manageRocketClick}
+          />
         </GameScreen>
         <Sun isGame={isGame} />
         <div className="planets-container">
