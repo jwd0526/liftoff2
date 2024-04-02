@@ -1,18 +1,70 @@
-body {
-  margin: 0;
-  overflow-x: hidden;
-  overflow-y: show;
-  font-family: "pixelSans";
-  user-select: none;
-}
-
 @font-face {
   font-family: "pixelSans";
   src: local("pixelSans"),
     url("./fonts/PixelifySans-Regular.ttf") format("truetype");
 }
 
+@keyframes liftoff-animation {
+  0% {
+    opacity: 1;
+    z-index: 3;
+  }
+  50% {
+    opacity: 1;
+  }
+  99% {
+    z-index: 3;
+  }
+  100% {
+    opacity: 0;
+    z-index: -1;
+  }
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  font-family: "pixelSans";
+  user-select: none;
+}
+
 .in-game {
-  transition-duration: 1s !important;
+  transition-duration: 0.5s !important;
   transform: translateY(100vh);
+}
+
+.liftoff-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: white;
+}
+
+.star {
+  position: absolute;
+  background-color: white;
+  overflow: hidden;
+  z-index: 0;
+  border-radius: 1px;
+}
+
+.star-containers {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.stars-container {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 0;
 }

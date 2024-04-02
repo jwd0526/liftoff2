@@ -17,30 +17,8 @@ const PLANETS = [
   "uranus",
   "neptune",
 ];
-const ratio: number = window.innerWidth / window.innerHeight;
-
-const generateStars = (container: HTMLDivElement, numStars: number) => {
-  const containerRect = container.getBoundingClientRect();
-
-  const stars = Array.from({ length: numStars }).map(() => {
-    const star = document.createElement("div");
-    star.classList.add("star");
-    const starSize = Math.random() * (3 - 1) + 1; // Generate random size
-    const starX = Math.random() * (containerRect.width - starSize); // Random X
-    const starY = Math.random() * (containerRect.height - starSize); // Random Y
-    star.style.left = `${starX}px`;
-    star.style.top = `${starY}px`;
-    star.style.opacity = (Math.random() * (0.7 - 0.2) + 0.2).toString(); // Generate random opacity
-    star.style.width = `${starSize}px`;
-    star.style.height = `${starSize}px`;
-    return star;
-  });
-
-  container.append(...stars);
-};
 
 const App: React.FC = () => {
-  const starContainerRef = useRef<HTMLDivElement | null>(null);
   const [selectedPlanet, setSelectedPlanet] = useState<string | null>(null);
   const [planetObject, setPlanetObject] = useState<HTMLElement | null>(null);
   const [rocketObject, setRocketObject] = useState<HTMLElement | null>(null);
@@ -52,6 +30,17 @@ const App: React.FC = () => {
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [angleFeedback, setAngleFeedback] = useState<string>("");
   const [planetScale, setPlanetScale] = useState<number>(1);
+  const farRef = useRef<HTMLDivElement | null>(null);
+  const midRef = useRef<HTMLDivElement | null>(null);
+  const nearRef = useRef<HTMLDivElement | null>(null);
+  const starContainersRef = useRef<HTMLDivElement | null>(null);
+  const [farTopVal, setFarTopVal] = useState<number>(0);
+  const [midTopVal, setMidTopVal] = useState<number>(0);
+  const [nearTopVal, setNearTopVal] = useState<number>(0);
+  const farRef2 = useRef<HTMLDivElement | null>(null);
+  const midRef2 = useRef<HTMLDivElement | null>(null);
+  const nearRef2 = useRef<HTMLDivElement | null>(null);
+  const [gameSpeed, setGameSpeed] = useState<number>(0.2);
 
   const managePlanetClick = (planet: HTMLDivElement, planetScale: number) => {
     setIsGame(true);
@@ -88,6 +77,7 @@ const App: React.FC = () => {
     rocketBoxObject?.classList.remove("upgrades-img-box");
     setGameStarted(false);
     setRocketAnimation("unset");
+    rocketBoxObject?.style.setProperty("transform", "");
   };
 
   const getCurrentRotation = (el: Element): number => {
@@ -129,30 +119,143 @@ const App: React.FC = () => {
     );
 
     rocketObject?.style.setProperty("animation-play-state", "paused");
-    console.log(rocketBoxObject);
   };
 
   useEffect(() => {
     rocketObject?.style.setProperty("animation", `${rocketAnimation}`);
   }, [rocketAnimation, rocketObject?.style]);
 
+  const generateStars = (numStars: number, container: HTMLDivElement) => {
+    const starContainer = container;
+    const containerRect = starContainer.getBoundingClientRect();
+
+    if (starContainer) {
+      Array.from({ length: numStars }).map(() => {
+        const star = document.createElement("div");
+        star.className = "star";
+        const starSize = Math.random() * (4 - 1) + 1;
+        const starX = Math.random() * (containerRect.width - starSize);
+        const starY = Math.random() * (containerRect.height - starSize);
+        star.style.left = `${starX}px`;
+        star.style.top = `${starY}px`;
+        star.style.opacity = (Math.random() * (0.8 - 0.4) + 0.4).toString();
+        star.style.width = `${starSize}px`;
+        star.style.height = `${starSize}px`;
+
+        starContainer.appendChild(star);
+      });
+    }
+  };
+
+  const resetStars = (container: HTMLDivElement) => {
+    if (container) {
+      container.innerHTML = "";
+      generateStars(20, container);
+    }
+  };
+
   useEffect(() => {
-    const starContainer = starContainerRef.current;
-    const numStars = 40;
-    if (starContainer) generateStars(starContainer, numStars);
+    generateStars(20, nearRef.current as HTMLDivElement);
+    generateStars(20, midRef.current as HTMLDivElement);
+    generateStars(20, farRef.current as HTMLDivElement);
+    generateStars(20, nearRef2.current as HTMLDivElement);
+    generateStars(20, midRef2.current as HTMLDivElement);
+    generateStars(20, farRef2.current as HTMLDivElement);
   }, []);
+
+  useEffect(() => {
+    if (gameStarted) {
+      const starInterval = setInterval(() => {
+        setFarTopVal((prevFarTopVal) => prevFarTopVal + 3 * gameSpeed);
+        if (farTopVal >= 100) {
+          setFarTopVal(-100);
+          resetStars(farRef.current as HTMLDivElement);
+        } else if (farTopVal == 0) {
+          resetStars(farRef2.current as HTMLDivElement);
+        }
+        setMidTopVal((prevMidTopVal) => prevMidTopVal + 5 * gameSpeed);
+        if (midTopVal >= 100) {
+          setMidTopVal(-100);
+          resetStars(midRef.current as HTMLDivElement);
+        } else if (midTopVal == 0) {
+          resetStars(midRef2.current as HTMLDivElement);
+        }
+        setNearTopVal((prevNearTopVal) => prevNearTopVal + 7 * gameSpeed);
+        if (nearTopVal >= 100) {
+          setNearTopVal(-100);
+          resetStars(nearRef.current as HTMLDivElement);
+        } else if (nearTopVal == 0) {
+          resetStars(nearRef2.current as HTMLDivElement);
+        }
+      }, 1000 / 60);
+      return () => {
+        clearInterval(starInterval);
+      };
+    }
+  }, [gameStarted, farTopVal, midTopVal, nearTopVal]);
 
   return (
     <div className="App">
-      <div className="star-container" ref={starContainerRef} />
-      <StartScreen isGame={isGame} onRightClick={manageRightClick}>
+      <div
+        className="liftoff-overlay"
+        style={
+          gameStarted
+            ? { animation: `liftoff-animation 1.7s linear forwards` }
+            : { visibility: "hidden", zIndex: -1 }
+        }>
         <div
-          className={`angle-feedback-box ${gameStarted ? "in-game" : ""}`}
+          className={`angle-feedback-box`}
           style={
             gameStarted ? { visibility: "visible" } : { visibility: "hidden" }
           }>
           <p className="angle-feedback">{angleFeedback}</p>
         </div>
+      </div>
+      <div ref={starContainersRef} className="star-containers">
+        <div
+          ref={farRef}
+          className="stars-container far-box"
+          style={{ top: `${farTopVal}%` }}
+        />
+        <div
+          ref={farRef2}
+          className="stars-container far-box"
+          style={
+            farTopVal <= 0
+              ? { top: `${farTopVal + 100}%` }
+              : { top: `${farTopVal - 100}%` }
+          }
+        />
+        <div
+          ref={midRef}
+          className="stars-container mid-box"
+          style={{ top: `${midTopVal}%` }}
+        />
+        <div
+          ref={midRef2}
+          className="stars-container mid-box"
+          style={
+            midTopVal <= 0
+              ? { top: `${midTopVal + 100}%` }
+              : { top: `${midTopVal - 100}%` }
+          }
+        />
+        <div
+          ref={nearRef}
+          className="stars-container near-box"
+          style={{ top: `${nearTopVal}%` }}
+        />
+        <div
+          ref={nearRef2}
+          className="stars-container near-box"
+          style={
+            nearTopVal <= 0
+              ? { top: `${nearTopVal + 100}%` }
+              : { top: `${nearTopVal - 100}%` }
+          }
+        />
+      </div>
+      <StartScreen isGame={isGame} onRightClick={manageRightClick}>
         <GameScreen
           planet={selectedPlanet}
           isGame={isGame}
