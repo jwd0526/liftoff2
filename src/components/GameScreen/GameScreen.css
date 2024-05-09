@@ -93,6 +93,30 @@
   font-weight: bold;
 }
 
+.stats-container {
+  position: absolute;
+  height: 30vh;
+  width: 15vw;
+  background-color: #000518;
+  border: 5px solid #cdebfc;
+  border-radius: 5px;
+  left: 84.5%;
+}
+
+.stats-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #cdebfc;
+}
+
+.stats {
+  color: #cdebfc;
+  font-size: 20px;
+  font-weight: bold;
+}
+
 @keyframes move-in {
   0% {
     transform: translateY(400%);

@@ -58,7 +58,21 @@ const Upgrade: React.FC<UpgradeProps> = ({ isGame }) => {
     <MagneticProbe unlocked={perksUnlocked[5]} />,
   ];
 
-  const handlePerkClick = (perk: React.ReactNode, index: number) => {};
+  const handlePerkClick = (perk: React.ReactNode, index: number) => {
+    if (perksUnlocked[index]) {
+      setPerksUnlocked((prev) => {
+        const newPerks = [...prev];
+        newPerks[index] = false;
+        return newPerks;
+      });
+    } else {
+      setPerksUnlocked((prev) => {
+        const newPerks = [...prev];
+        newPerks[index] = true;
+        return newPerks;
+      });
+    }
+  };
 
   return (
     <div className={`upgrade-container ${visibleClass} hidden`}>

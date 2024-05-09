@@ -30,6 +30,7 @@ const App: React.FC = () => {
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [angleFeedback, setAngleFeedback] = useState<string>("");
   const [planetScale, setPlanetScale] = useState<number>(1);
+
   const farRef = useRef<HTMLDivElement | null>(null);
   const midRef = useRef<HTMLDivElement | null>(null);
   const nearRef = useRef<HTMLDivElement | null>(null);
@@ -95,7 +96,7 @@ const App: React.FC = () => {
     }
   };
 
-  const managePlayClick = (perks: string) => {
+  const managePlayClick = (perks: string[]) => {
     setGameStarted(true);
     const angle = getCurrentRotation(rocketObject as Element) - 45;
     console.log(angle);
