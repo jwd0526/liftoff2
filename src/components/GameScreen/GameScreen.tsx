@@ -75,11 +75,11 @@ const GameScreen: React.FC<GameScreenProps> = ({
 
   return (
     <div className={"game-container"}>
-      <div className="stats-container">
-        <div className="stats-box">
+      <div className={`stats-container ${gameClass}`}>
+        <div className={"stats-box"}>
           <p className="stats">Flight Information</p>
           <div className="planet-info">
-            <p className="planet-name">Starting planet: {planet}</p>
+            <p className="planet-name">Starting planet: {planet ? planet[0].toUpperCase() + planet.slice(1) : null}</p>
             <p className="planet-grav">{planetPercs[0]}</p>
             <p className="planet-velo">{planetPercs[1]}</p>
             <div className="acitve-perks">Active Perks: </div>
@@ -108,10 +108,9 @@ const GameScreen: React.FC<GameScreenProps> = ({
       {isGame ? planetComponent : null}
       <div className={`planet-perks-box ${gameClass} ${inGameClass}`}>
         <p className="planet-perks">
-          {planet ? planet.charAt(0).toUpperCase() + planet.slice(1) : null}
+          {planet ? planet[0].toUpperCase() + planet.slice(1) : null}
         </p>
       </div>
-
       {children}
     </div>
   );
